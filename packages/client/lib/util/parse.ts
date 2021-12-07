@@ -238,6 +238,7 @@ async function parseGethParams(json: any) {
     'muirGlacier',
     'berlin',
     'london',
+    'cancun',
   ]
   const forkMap: { [key: string]: string } = {
     homestead: 'homesteadBlock',
@@ -251,6 +252,7 @@ async function parseGethParams(json: any) {
     muirGlacier: 'muirGlacierBlock',
     berlin: 'berlinBlock',
     london: 'londonBlock',
+    cancun: 'cancunBlock',
   }
   params.hardforks = hardforks
     .map((name) => ({

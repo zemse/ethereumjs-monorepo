@@ -14,4 +14,5 @@ export const hardforks = [
   ['shanghai', require('./shanghai.json')],
   ['arrowGlacier', require('./arrowGlacier.json')],
   ['merge', require('./merge.json')],
+  ['cancun', require('./cancun.json')],
 ]

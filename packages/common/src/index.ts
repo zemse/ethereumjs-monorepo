@@ -80,6 +80,7 @@ export enum Hardfork {
   ArrowGlacier = 'arrowGlacier',
   Shanghai = 'shanghai',
   Merge = 'merge',
+  Cancun = 'cancun',
 }
 
 export enum ConsensusType {
@@ -1122,7 +1123,6 @@ export default class Common extends EventEmitter {
    */
   consensusType(): string | ConsensusType {
     const hardfork = this.hardfork()
-
     let value
     for (const hfChanges of HARDFORK_CHANGES) {
       if ('consensus' in hfChanges[1]) {

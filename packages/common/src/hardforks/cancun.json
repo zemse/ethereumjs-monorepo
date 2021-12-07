@@ -1,0 +1,10 @@
+{
+    "name": "cancun",
+    "comment": "HF to add verkle tries",
+    "url": "https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/arrow-glacier.md",
+    "status": "Final",
+    "eips": [],
+    "consensus": {
+        "type": "pow"
+    }
+}
