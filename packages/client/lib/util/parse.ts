@@ -13,11 +13,12 @@ import {
   isHexPrefixed,
   stripHexPrefix,
   bnToHex,
-  bufferToHex,
   addHexPrefix,
+  bufferToHex,
 } from 'ethereumjs-util'
 import type { MultiaddrLike } from '../types'
 import type { GenesisState } from '@ethereumjs/common/dist/types'
+import wasm from '../../../../verkle/rust_verkle_wasm'
 
 /**
  * Parses multiaddrs and bootnodes to multiaddr format.
@@ -168,13 +169,13 @@ async function createGethGenesisBlockHeader(json: any) {
 async function parseGethParams(json: any) {
   const { name, config, difficulty, nonce, mixHash, coinbase } = json
 
-  let { gasLimit, extraData, baseFeePerGas, timestamp } = json
-
+  let { gasLimit, extraData, timestamp } = json
+  const { baseFeePerGas } = json
   // geth stores gasLimit as a hex string while our gasLimit is a `number`
   json['gasLimit'] = gasLimit = parseInt(gasLimit)
   // geth assumes an initial base fee value on londonBlock=0
-  json['baseFeePerGas'] = baseFeePerGas =
-    baseFeePerGas === undefined && config.londonBlock === 0 ? 1000000000 : undefined
+  //  json['baseFeePerGas'] = baseFeePerGas =
+  //   baseFeePerGas === undefined && config.londonBlock === 0 ? 1000000000 : undefined
   // geth is not strictly putting in empty fields with a 0x prefix
   json['extraData'] = extraData = extraData === '' ? '0x' : extraData
   // geth may use number for timestamp
@@ -189,9 +190,38 @@ async function parseGethParams(json: any) {
   }
 
   const { chainId } = config
-  const header = await createGethGenesisBlockHeader(json)
-  const { stateRoot } = header
-  const hash = bufferToHex(header.hash())
+
+  const hash = '0xb2195ab4a091f011794a9fd2eca38b831b42fe52e6bc99e4eebe8085b24673ef'
+
+  // Compute Verkle Genesis State Root
+  const parentStateRoot = toBuffer(
+    '0x0000000000000000000000000000000000000000000000000000000000000000'
+  )
+  const genesisBlockRlp =
+    '0xf901f6f901f1a00000000000000000000000000000000000000000000000000000000000000000a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347940000000000000000000000000000000000000000a01c3604dd43a38735e9afc5f8fa99ceff3734bfc612963367f6788a45bf19c282a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000180832fefd8808080a0000000000000000000000000000000000000000000000000000000000000000088000000000000005607c0c0'
+  const decodedBlock = rlp.decode(toBuffer(genesisBlockRlp)) as any
+  const genesisBlockVerkleProof = decodedBlock[0][16]
+  const genesisStateTransition = new Map()
+
+  // from geth verkle fork genesis state
+  const genesisPreAllocationAddress = Buffer.concat([
+    Buffer.alloc(12).fill(0),
+    toBuffer('0xa8ea391eacd86ab326843579060e42007a5fa93b'),
+  ])
+  const genesisStateBalance = toBuffer('0x40000000000000000000')
+  genesisStateTransition.set(genesisPreAllocationAddress, [
+    null,
+    Buffer.concat([Buffer.alloc(32 - genesisStateBalance.length).fill(0), genesisStateBalance]),
+  ])
+
+  // Compute genesis verkle state root
+  const stateRoot = wasm.js_verify_update(
+    parentStateRoot,
+    genesisBlockVerkleProof,
+    genesisStateTransition
+  )
+  console.log('computed genesis state root', bufferToHex(stateRoot))
+
   const params: any = {
     name,
     chainId,
@@ -205,7 +235,7 @@ async function parseGethParams(json: any) {
       extraData,
       mixHash,
       coinbase,
-      stateRoot: bufferToHex(stateRoot),
+      stateRoot: stateRoot,
       baseFeePerGas,
     },
     bootstrapNodes: [],
@@ -224,7 +254,6 @@ async function parseGethParams(json: any) {
           ethash: {},
         },
   }
-
   const hardforks = [
     'chainstart',
     'homestead',

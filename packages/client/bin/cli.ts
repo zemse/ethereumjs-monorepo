@@ -618,7 +618,6 @@ async function run() {
       chain: genesisParams.name,
       customChains: [[genesisParams, genesisState]],
     })
-    console.log(common.hardforks())
   }
 
   if (args.mine && accounts.length === 0) {
