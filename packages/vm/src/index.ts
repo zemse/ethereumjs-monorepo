@@ -284,6 +284,31 @@ export default class VM extends AsyncEventEmitter {
     // Initialize the opcode data
     this.getActiveOpcodes()
 
+    const supportedHardforks = [
+      Hardfork.Chainstart,
+      Hardfork.Homestead,
+      Hardfork.Dao,
+      Hardfork.TangerineWhistle,
+      Hardfork.SpuriousDragon,
+      Hardfork.Byzantium,
+      Hardfork.Constantinople,
+      Hardfork.Petersburg,
+      Hardfork.Istanbul,
+      Hardfork.MuirGlacier,
+      Hardfork.Berlin,
+      Hardfork.London,
+      Hardfork.ArrowGlacier,
+    ]
+    if (!supportedHardforks.includes(this._common.hardfork() as Hardfork)) {
+      throw new Error(
+        `Hardfork ${this._common.hardfork()} not set as supported in supportedHardforks`
+      )
+    }
+
+    // Set list of opcodes based on HF
+    // TODO: make this EIP-friendly
+    this._opcodes = getOpcodesForHF(this._common)
+
     if (opts.stateManager) {
       this.stateManager = opts.stateManager
     } else {
