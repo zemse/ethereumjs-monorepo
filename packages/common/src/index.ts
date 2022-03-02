@@ -115,6 +115,11 @@ interface BaseOpts {
    * - [EIP-2537](https://eips.ethereum.org/EIPS/eip-2537) - BLS12-381 precompiles
    */
   eips?: number[]
+
+  /**
+   * 
+   */
+  disabledEIPs?: number[]
 }
 
 /**
@@ -367,9 +372,14 @@ export default class Common extends EventEmitter {
     if (opts.hardfork) {
       this.setHardfork(opts.hardfork)
     }
+    this._initializeEIPs()
     if (opts.eips) {
       this.setEIPs(opts.eips)
     }
+    if (opts.disabledEIPs) {
+      this.disableEIPs(opts.disabledEIPs);
+    }
+
   }
 
   /**
@@ -557,6 +567,21 @@ export default class Common extends EventEmitter {
     return false
   }
 
+  private _initializeEIPs() {
+    let eips: number[] = []
+    for (const hfChanges of HARDFORK_CHANGES) {
+      const hf = hfChanges[1]
+      if (this.gteHardfork(hf['name']) && 'eips' in hf) {
+        hf['eips'].map((eip: number) => {
+          if (!eips.includes(eip)) {
+            eips.push(eip)
+          }
+        })
+      }
+    }
+    this._eips = eips
+  }
+
   /**
    * Sets the active EIPs
    * @param eips
@@ -581,6 +606,22 @@ export default class Common extends EventEmitter {
       }
     }
     this._eips = eips
+  }
+
+  private disableEIPs(eips: number[]) {
+    const currentlyActivated = this._eips.map((e) => e) // Clone the EIPs array
+    for (const eip of eips) {
+      if (!(eip in EIPs)) {
+        throw new Error(`${eip} not supported`)
+      }
+      if (EIPs[eip].requiredEIPs) {
+        ;(EIPs[eip].requiredEIPs as number[]).forEach((elem) => {
+          if (!(eips.includes(elem) || this.isActivatedEIP(elem))) {
+            throw new Error(`${eip} requires EIP ${elem}, but is not included in the EIP list`)
+          }
+        })
+      }
+    }
   }
 
   /**
