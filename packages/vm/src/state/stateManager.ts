@@ -18,6 +18,7 @@ import { StateManager, StorageDump } from './interface'
 import Cache, { getCb, putCb } from './cache'
 import { BaseStateManager } from './'
 import { short } from '../evm/opcodes'
+import { CustomPrecompile } from '../evm/precompiles'
 
 type StorageProof = {
   key: PrefixedHexString
@@ -57,6 +58,10 @@ export interface DefaultStateManagerOpts {
    * A {@link SecureTrie} instance
    */
   trie?: Trie
+  /**
+   * Optional custom precompiles (to exclude from access list generation)
+   */
+  customPrecompiles?: CustomPrecompile[]
 }
 
 /**
