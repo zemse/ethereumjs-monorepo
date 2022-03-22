@@ -1,14 +1,15 @@
 import tape from 'tape'
+import { Address } from 'ethereumjs-util'
 import Common, { Chain, Hardfork } from '@ethereumjs/common'
 import VM from '../../../../src'
-import { getActivePrecompiles } from '../../../../src/evm/precompiles'
+import { getPrecompile } from '../../../../src/evm/precompiles'
 
 tape('Precompiles: ECPAIRING', (t) => {
   t.test('ECPAIRING', async (st) => {
     const common = new Common({ chain: Chain.Mainnet, hardfork: Hardfork.Petersburg })
     const vm = new VM({ common: common })
-    const addressStr = '0000000000000000000000000000000000000008'
-    const ECPAIRING = getActivePrecompiles(common).get(addressStr)!
+    const address = new Address(Buffer.from('0000000000000000000000000000000000000008', 'hex'))
+    const ECPAIRING = getPrecompile(address, common)
 
     const result = await ECPAIRING({
       data: Buffer.from(

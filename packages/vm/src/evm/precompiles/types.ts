@@ -3,7 +3,7 @@ import { ExecResult } from '../evm'
 import VM from '../../index'
 
 export interface PrecompileFunc {
-  (input: PrecompileInput): Promise<ExecResult> | ExecResult
+  (opts: PrecompileInput): Promise<ExecResult> | ExecResult
 }
 
 export interface PrecompileInput {
