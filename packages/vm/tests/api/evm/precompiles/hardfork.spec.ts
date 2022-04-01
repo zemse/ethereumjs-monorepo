@@ -22,7 +22,7 @@ tape('Precompiles: hardfork availability', (t) => {
     }
 
     let vm = await VM.create({ common: commonByzantium })
-    let result = await vm.runCall({
+    let result = await vm.evm.runCall({
       caller: Address.zero(),
       gasLimit: BigInt(0xffffffffff),
       to: ECPAIR_Address,
@@ -42,7 +42,7 @@ tape('Precompiles: hardfork availability', (t) => {
     }
 
     vm = await VM.create({ common: commonPetersburg })
-    result = await vm.runCall({
+    result = await vm.evm.runCall({
       caller: Address.zero(),
       gasLimit: BigInt(0xffffffffff),
       to: ECPAIR_Address,
@@ -63,7 +63,7 @@ tape('Precompiles: hardfork availability', (t) => {
 
     vm = await VM.create({ common: commonHomestead })
 
-    result = await vm.runCall({
+    result = await vm.evm.runCall({
       caller: Address.zero(),
       gasLimit: BigInt(0xffffffffff),
       to: ECPAIR_Address,
