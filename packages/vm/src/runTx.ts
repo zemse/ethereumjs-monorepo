@@ -14,7 +14,6 @@ import {
 import VM from './index'
 import Bloom from './bloom'
 import { EVMResult } from './evm/evm'
-import { short } from './evm/opcodes/util'
 import Message from './evm/message'
 import TxContext from './evm/txContext'
 import { getActivePrecompiles } from './evm/precompiles'
