@@ -1,67 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648888447861,
+  "lastUpdate": 1649258966180,
   "repoUrl": "https://github.com/ethereumjs/ethereumjs-monorepo",
   "entries": {
     "Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "ryan@ryanio.com",
-            "name": "Ryan Ghods",
-            "username": "ryanio"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "b5d9fb0765af7e6a176762acb548eed5033eda5f",
-          "message": "common: update status fields for EIPs and hardforks (#1777)\n\n* common: update status fields for EIPs and hardforks\r\n\r\n* Common: EXPERIMENTAL -> Draft status (EIP-2315)\r\n\r\nCo-authored-by: Holger Drewes <Holger.Drewes@gmail.com>",
-          "timestamp": "2022-03-11T12:06:47+01:00",
-          "tree_id": "73a0224cf326da3e3c447da9f2553812b0855c3f",
-          "url": "https://github.com/ethereumjs/ethereumjs-monorepo/commit/b5d9fb0765af7e6a176762acb548eed5033eda5f"
-        },
-        "date": 1646997089036,
-        "tool": "benchmarkjs",
-        "benches": [
-          {
-            "name": "Block 9422905",
-            "value": 19339,
-            "range": "±8.59%",
-            "unit": "ops/sec",
-            "extra": "74 samples"
-          },
-          {
-            "name": "Block 9422906",
-            "value": 20807,
-            "range": "±1.95%",
-            "unit": "ops/sec",
-            "extra": "80 samples"
-          },
-          {
-            "name": "Block 9422907",
-            "value": 16893,
-            "range": "±14.05%",
-            "unit": "ops/sec",
-            "extra": "62 samples"
-          },
-          {
-            "name": "Block 9422908",
-            "value": 20419,
-            "range": "±1.70%",
-            "unit": "ops/sec",
-            "extra": "77 samples"
-          },
-          {
-            "name": "Block 9422910",
-            "value": 19625,
-            "range": "±1.99%",
-            "unit": "ops/sec",
-            "extra": "74 samples"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1768,6 +1709,65 @@ window.BENCHMARK_DATA = {
             "name": "Block 9422910",
             "value": 20937,
             "range": "±1.45%",
+            "unit": "ops/sec",
+            "extra": "73 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ryan@ryanio.com",
+            "name": "Ryan Ghods",
+            "username": "ryanio"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f91195fc04ccb6155a1e37df0e7feec45d86a1d3",
+          "message": "client: fix eth_call, add remoteBlocks to engine (#1830)\n\n* improve eth_call to use runCall\r\nformat and return vm internal errors so they display in json rpc\r\n\r\n* add remoteBlocks, refactor out assembleBlock, return `latestValidHash: null` when SYNCING to follow spec\r\n\r\n* engine: add parent hash equals to block hash test case in new payload\r\n\r\n* improve return type of assembleBlock\r\n\r\n* pass array of blocks to setHead to save pending receipts\r\n\r\nCo-authored-by: cbrzn <cesarbrazon10@gmail.com>",
+          "timestamp": "2022-04-06T17:21:40+02:00",
+          "tree_id": "2a5957be8e6316aee36d78caf41b24da8a27d361",
+          "url": "https://github.com/ethereumjs/ethereumjs-monorepo/commit/f91195fc04ccb6155a1e37df0e7feec45d86a1d3"
+        },
+        "date": 1649258965566,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Block 9422905",
+            "value": 10510,
+            "range": "±4.32%",
+            "unit": "ops/sec",
+            "extra": "77 samples"
+          },
+          {
+            "name": "Block 9422906",
+            "value": 10128,
+            "range": "±6.67%",
+            "unit": "ops/sec",
+            "extra": "72 samples"
+          },
+          {
+            "name": "Block 9422907",
+            "value": 10907,
+            "range": "±3.43%",
+            "unit": "ops/sec",
+            "extra": "79 samples"
+          },
+          {
+            "name": "Block 9422908",
+            "value": 10280,
+            "range": "±7.56%",
+            "unit": "ops/sec",
+            "extra": "75 samples"
+          },
+          {
+            "name": "Block 9422910",
+            "value": 8699,
+            "range": "±19.33%",
             "unit": "ops/sec",
             "extra": "73 samples"
           }
