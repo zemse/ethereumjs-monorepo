@@ -1,67 +1,8 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650527180868,
+  "lastUpdate": 1650546365257,
   "repoUrl": "https://github.com/ethereumjs/ethereumjs-monorepo",
   "entries": {
     "Benchmark": [
-      {
-        "commit": {
-          "author": {
-            "email": "Holger.Drewes@gmail.com",
-            "name": "Holger Drewes",
-            "username": "holgerd77"
-          },
-          "committer": {
-            "email": "noreply@github.com",
-            "name": "GitHub",
-            "username": "web-flow"
-          },
-          "distinct": true,
-          "id": "2843b6eca643947d15f28f4f47a323d3a119a6ba",
-          "message": "Client: added Kiln bootnodes, fixed comma-separated bootnode input parsing (#1798)",
-          "timestamp": "2022-03-17T14:53:11+01:00",
-          "tree_id": "814372f67bd5536d3e73aab866b1c92426e4c1de",
-          "url": "https://github.com/ethereumjs/ethereumjs-monorepo/commit/2843b6eca643947d15f28f4f47a323d3a119a6ba"
-        },
-        "date": 1647525491580,
-        "tool": "benchmarkjs",
-        "benches": [
-          {
-            "name": "Block 9422905",
-            "value": 19466,
-            "range": "±7.16%",
-            "unit": "ops/sec",
-            "extra": "74 samples"
-          },
-          {
-            "name": "Block 9422906",
-            "value": 20981,
-            "range": "±1.96%",
-            "unit": "ops/sec",
-            "extra": "77 samples"
-          },
-          {
-            "name": "Block 9422907",
-            "value": 17046,
-            "range": "±16.20%",
-            "unit": "ops/sec",
-            "extra": "65 samples"
-          },
-          {
-            "name": "Block 9422908",
-            "value": 20247,
-            "range": "±1.64%",
-            "unit": "ops/sec",
-            "extra": "76 samples"
-          },
-          {
-            "name": "Block 9422910",
-            "value": 20120,
-            "range": "±1.94%",
-            "unit": "ops/sec",
-            "extra": "75 samples"
-          }
-        ]
-      },
       {
         "commit": {
           "author": {
@@ -1770,6 +1711,65 @@ window.BENCHMARK_DATA = {
             "range": "±4.49%",
             "unit": "ops/sec",
             "extra": "70 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "76567250+g11tech@users.noreply.github.com",
+            "name": "g11tech",
+            "username": "g11tech"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c429125d034e4fdf9aacd9cd4ebb2049dd55d666",
+          "message": "pass the maxFetcherJobs arg to the config (#1861)",
+          "timestamp": "2022-04-21T06:00:45-07:00",
+          "tree_id": "f1bc3284e29c0f065babb8563127d3f9a93204a5",
+          "url": "https://github.com/ethereumjs/ethereumjs-monorepo/commit/c429125d034e4fdf9aacd9cd4ebb2049dd55d666"
+        },
+        "date": 1650546364676,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "Block 9422905",
+            "value": 15458,
+            "range": "±6.59%",
+            "unit": "ops/sec",
+            "extra": "73 samples"
+          },
+          {
+            "name": "Block 9422906",
+            "value": 14627,
+            "range": "±14.13%",
+            "unit": "ops/sec",
+            "extra": "76 samples"
+          },
+          {
+            "name": "Block 9422907",
+            "value": 15724,
+            "range": "±3.42%",
+            "unit": "ops/sec",
+            "extra": "72 samples"
+          },
+          {
+            "name": "Block 9422908",
+            "value": 13005,
+            "range": "±16.95%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "Block 9422910",
+            "value": 16209,
+            "range": "±3.14%",
+            "unit": "ops/sec",
+            "extra": "75 samples"
           }
         ]
       }
