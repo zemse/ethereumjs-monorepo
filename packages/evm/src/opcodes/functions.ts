@@ -901,6 +901,19 @@ export const handlers: Map<number, OpHandler> = new Map([
       runState.interpreter.transientStorageStore(keyBuf, value)
     },
   ],
+  // 0xb5: EXTSLOAD
+  [
+    0xb5,
+    async function (runState) {
+      const addressBigInt = runState.stack.pop()
+      const address = new Address(addressToBuffer(addressBigInt))
+      const keyBigInt = runState.stack.pop()
+      const key = setLengthLeft(bigIntToBuffer(keyBigInt), 32)
+      const value = await runState.interpreter.externalStorageLoad(address, key)
+      const valueBigInt = value.length ? bufferToBigInt(value) : BigInt(0)
+      runState.stack.push(valueBigInt)
+    },
+  ],
   // '0xf0' range - closures
   // 0xf0: CREATE
   [
